@@ -13,7 +13,6 @@ You are given a list of keywords (on the next page). Write a program that will o
 program loads it)  
 
 ### Additional Questions  
-No code expected, please give your answers in a Readme file  
 ● What would you change if the list of keywords was much larger (several millions) ?  
 ● What would you change if the requirements were to match any portion of the keywords (for example, given the string “pro”, the program could suggest the keyword “reprobe”) ?  
 
