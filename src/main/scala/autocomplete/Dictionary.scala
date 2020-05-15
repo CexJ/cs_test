@@ -7,11 +7,11 @@ object Dictionary {
   def apply(inputs: List[String]): Dictionary = new Dictionary(inputs)
 }
 
-class Dictionary(input: List[String]) {
+class Dictionary(input: Seq[String]) {
   import Dictionary.maxCompletions
 
   // we sort the input
-  private val keywords: List[String] = input.sorted
+  private val sortedKeywords: Vector [String] = input.distinct.sorted.toVector
 
   /**
    *
@@ -19,11 +19,12 @@ class Dictionary(input: List[String]) {
    * @return the first (up to four) completion of the prefix
    */
   def autocomplete(prefix: String): List[String] = {
-    keywords
+    sortedKeywords
       // we search the index and we take the next elements
       .slice(index(prefix), index(prefix) + maxCompletions)
       // we check they actually start with the prefix
       .filter(_.startsWith(prefix))
+      .toList
   }
 
   /**
@@ -34,21 +35,21 @@ class Dictionary(input: List[String]) {
   def index(prefix: String): Int ={
 
     @tailrec
-    def indexRec(keywords: List[String], tempIndex: Int)(implicit prefix: String): Int = {
-      val middle = keywords.length/2
-      val keywordsMiddle = keywords(middle)
+    def indexRec(sortedVector: Vector [String], tempIndex: Int)(implicit prefix: String): Int = {
+      val middle = sortedVector.length/2
+      val sortedVectorMiddle = sortedVector(middle)
 
-      if(prefix <= keywords.head)
+      if(prefix <= sortedVector.head)
         tempIndex
-      else if(prefix > keywords.last)
-        tempIndex+keywords.length
-      else if(prefix < keywordsMiddle)
-        indexRec(keywords.slice(0, middle), tempIndex)
+      else if(prefix > sortedVector.last)
+        tempIndex+sortedVector.length
+      else if(prefix < sortedVectorMiddle)
+        indexRec(sortedVector.slice(0, middle), tempIndex)
       else
-        indexRec(keywords.slice(middle, keywords.length), tempIndex + middle)
+        indexRec(sortedVector.slice(middle, sortedVector.length), tempIndex + middle)
     }
 
-    indexRec(keywords, 0)(prefix)
+    indexRec(sortedKeywords, 0)(prefix)
   }
 
 }
