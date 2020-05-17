@@ -37,13 +37,12 @@ class Dictionary(input: Seq[String]) {
     @tailrec
     def indexRec(sortedVector: Vector [String], tempIndex: Int)(implicit prefix: String): Int = {
       val middle = sortedVector.length/2
-      val sortedVectorMiddle = sortedVector(middle)
 
-      if(prefix <= sortedVector.head)
+      if(sortedVector.isEmpty || prefix <= sortedVector.head)
         tempIndex
       else if(prefix > sortedVector.last)
         tempIndex+sortedVector.length
-      else if(prefix < sortedVectorMiddle)
+      else if(prefix < sortedVector(middle))
         indexRec(sortedVector.slice(0, middle), tempIndex)
       else
         indexRec(sortedVector.slice(middle, sortedVector.length), tempIndex + middle)
