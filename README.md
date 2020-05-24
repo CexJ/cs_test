@@ -32,7 +32,7 @@ In this scenario we would have to use parallel programming techniques to ask to 
 ● What would you change if the requirements were to match any portion of the keywords (for example, given the string “pro”, the program could suggest the keyword “reprobe”) ?  
 
 In this case for each word we can generate the list of its suffix and regroup them in tuples such as each suffix points to the first four autocompletion words containing it ((by alphabetical order). We will search the autocompletion of a prefix in the union of the sets pointed by suffix starting with the prefix.  
-For example if we take the words "bac", "bbc", "bcc", "bdc", "bec", "cad", "cbd" we will get the following tuple:
+For example if we take the words "bac", "bbc", "bcc", "bdc", "bec", "cad", "cbd" we will get the following tuple: 
 ("bac", ["bac"])  
 ("bbc", ["bbc"])  
 ("bcc", ["bcc"])  
@@ -61,7 +61,7 @@ from which we will extract the set ["bac", "bbc", "bcc", "bdc"].
 
 This algorithm could be used in a distributed scenario, where as before we divided the set in smaller sets. In this case we will use the suffix as key.  
 On the other hand this algorithm introduces some repetitions, in the order of the average length of our keywords, mitigated by taking only the first four words in each tuple.  
-Depending on the kind of set of keywords, this could be a reasonable price ot pay or not.
+Depending on the kind of set of keywords, this could be a reasonable price to pay or not.
 
 As before if it is not possible to choose the partition of the set, we can use a parallel programming technique. We send to all nodes the task of finding the first four words containing the prefix, we collect them and we extract the first four in alphabetical order.
 
